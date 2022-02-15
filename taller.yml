@@ -1,7 +1,7 @@
 ---
 
 - hosts: linux
-  remote_user: ansible
+  remote_user: sysadmin
   become: yes
   become_method: sudo
 
@@ -17,6 +17,13 @@
     when: ansible_os_family == "RedHat"
     notify: Reiniciar Servidor
 
+  - name: Habilitar firewall
+    firewalld:
+      permanent: yes
+      state: enable
+      port: 22/tcp     
+    when: ansible_os_family == "RedHat"            
+
   - name: Actualizar Paquetes en Debian
     apt:
       name: "*"
@@ -27,5 +34,5 @@
 
 
   handlers:
-  -name: Reiniciar Servidor
-   reboot:
+  - name: Reiniciar Servidor
+    reboot: 

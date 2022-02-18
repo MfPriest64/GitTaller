@@ -11,6 +11,9 @@ paquetes_deb:
 - mariadb-server
 - mariadb-client
 
-tomcat_url: "https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.16/bin/apache-tomcat-10.0.16.tar.gz"
+
+tomcat_url: "https://downloads.apache.org/tomcat/tomcat-9/v9.0.54/bin/apache-tomcat-9.0.54.tar.gz"
+
+#tomcat_url: "https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.16/bin/apache-tomcat-10.0.16.tar.gz"
 
 tomcat_dir: "/opt/apache-tomcat-10.0.16"

@@ -1,10 +1,11 @@
 ---
 # vars file for update
+
+
 paquetes_rh:
 - httpd
 - java-17-openjdk
-- mariadb-server
-- mariadb
+- mysql
 - tar
 
 paquetes_deb:
@@ -12,4 +13,10 @@ paquetes_deb:
 - openjdk-17-jdk
 - mariadb-server
 - mariadb-client
+
+port_ubuntu:
+- 22
+
+port_redhat:
+- 22/tcp
 

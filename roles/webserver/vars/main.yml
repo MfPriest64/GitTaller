@@ -1,2 +1,9 @@
 ---
 # vars file for webserver
+#
+port_ubuntu:
+- 80
+
+port_redhat:
+- 80/tcp
+

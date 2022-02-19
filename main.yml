@@ -4,7 +4,7 @@
 # de los servidores a configurar.
 - name: Update de servidores
   hosts: all
-  remote_user: Ansible
+  remote_user: sysadmin
   become: yes
 
   roles:
@@ -14,7 +14,7 @@
 # Segundo rol. Instala y configura Apache con Proxy Reverso
 - name: Desplegar Servidores Web
   hosts: all
-  remote_user: Ansible
+  remote_user: sysadmin
   become: yes
 
   roles:
@@ -24,7 +24,7 @@
 # Tercer rol. Despliegue de servidor MySQL
 - name: Desplegar servidor de bases de datos
   hosts: all
-  remote_user: Ansible
+  remote_user: sysadmin
   become: yes
 
   roles:
@@ -34,7 +34,7 @@
 # Cuarto rol. Despliegue de servidor Tomcat
 - name: Desplegar servidor Tomcat
   hosts: all
-  remote_user: Ansible
+  remote_user: sysadmin
   become: yes
 
   roles:

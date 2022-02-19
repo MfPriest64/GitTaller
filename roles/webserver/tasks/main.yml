@@ -1,2 +1,21 @@
 ---
 # tasks file for webserver
+#
+  - name: Incluir variables
+    include_vars: /root/.ssh/GitTaller/roles/webserver/vars/main.yml
+
+  - name: Firewall activar puerto 80
+    firewalld:
+      permanent: yes
+      port: "{{ item }}"
+    loop: "{{ port_redhat }}"
+    when: ansible_os_family == "RedHat"
+
+  - name: Firewall activar puerto 80
+    ufw:
+      rule: allow
+      port: "{{ item }}"
+      proto: tcp
+    loop: "{{ port_ubuntu }}"
+    when: ansible_os_family == "Debian"
+

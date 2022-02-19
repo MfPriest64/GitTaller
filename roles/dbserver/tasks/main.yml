@@ -1,2 +1,13 @@
 ---
 # tasks file for dbserver
+#
+  - name: Incluir variables
+    include_vars: /root/.ssh/GitTaller/roles/dbserver/vars/main.yml
+
+
+  - name: Iniciar mysql
+    service:
+      name: mysql
+      enabled: true
+      state: started
+    when: ansible_os_family == "RedHat"

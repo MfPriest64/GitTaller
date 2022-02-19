@@ -6,29 +6,30 @@
 # Incluir variables del archivo de variables
   - name: Incluir variables
     include_vars: /root/.ssh/GitTaller/roles/update/vars/main.yml
+  
 
-
-  - name: Instalar paquetes en Red Hat
+  - name: Instalar paquetes en RedHat
     dnf:
       name: "{{ item }}"
-      state: present
+      state: latest
+      update_cache: yes
     loop: "{{ paquetes_rh }}"
-    when: ansible_os_family  == "RedHat"
+    #    when: ansible_os_family in "RedHat"
 
   - name: Instalar paquetes en Debian
     apt:
       name: "{{ item }}"
-      state: present
+      state: latest
       update_cache: yes
     loop: "{{ paquetes_deb }}"
-    when: ansible_os_family  == "Debian"
+    when: ansible_os_family == "Debian"
 
-    - name: Actualizar paquetes en Red Hat
+  - name: Actualizar paquetes en Red Hat
     dnf:
       name: "*"
       state: latest
       update_only: yes
-    when: ansible_os_family == "RedHat"
+      # when: ansible_os_family == "RedHat"
     notify: Reiniciar servidor
 
   - name: Actualizar paquetes en Debian
@@ -43,13 +44,16 @@
     firewalld:
       permanent: yes
       state: enabled
-      port: 22/tcp
-    when: ansible_os_family == "RedHat"
+      port: "{{ item }}"
+    loop: "{{ port_redhat }}" 
+    # when: ansible_os_family == "RedHat"
 
   - name: Firewall activado con ssh habilitado en Debian
     ufw:
+      state: enabled      
       rule: allow
-      port: 22/tcp
+      port: "{{ item }}"
       proto: tcp
+    loop: "{{ port_ubuntu }}"  
     when: ansible_facts['os_family'] == "Debian"
 

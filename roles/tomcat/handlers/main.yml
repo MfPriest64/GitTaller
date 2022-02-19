@@ -1,7 +1,9 @@
 ---
 # handlers file for tomcat
 #
-- name: Reinicar Tomcat
+# handlers:
+
+  - name: Reinicar servicio
     systemd:
       daemon_reload: yes
       name: tomcat

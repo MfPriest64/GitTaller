@@ -16,9 +16,9 @@
 
   - name: Instalar servicio Tomcat
     template:
-      src: tomcat.service.j2
+      src: tomcat_service
       dest: /etc/systemd/system/tomcat.service
-    notify: Reiniciar Tomcat
+    notify: Reiniciar servicio
 
   - name: Tomcat está habilitado e iniciado
     systemd:

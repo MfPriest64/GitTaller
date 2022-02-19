@@ -5,7 +5,8 @@
 paquetes_rh:
 - httpd
 - java-17-openjdk
-- mysql
+- mariadb-server
+- mariadb
 - tar
 
 paquetes_deb:

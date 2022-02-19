@@ -1,8 +1,8 @@
 ---
 # vars file for dbserver
 #
-mysqlservice: MySql
-mysql_port: '3306'
-dbuser: <usuario a definir>
-dbname: <nombre de base a definir>
-upassword: <passwrd a definir>
+mysqlservice: mariadb
+port_mysql: '3306'
+dbuser: todo
+dbname: todo
+userpasswd: prueba2022

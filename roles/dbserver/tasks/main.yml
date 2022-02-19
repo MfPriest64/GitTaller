@@ -5,9 +5,114 @@
     include_vars: /root/.ssh/GitTaller/roles/dbserver/vars/main.yml
 
 
-  - name: Iniciar mysql
+  - name: Iniciar MariaDB en RedHat
     service:
-      name: mysql
+      name: mariadb
       enabled: true
       state: started
     when: ansible_os_family == "RedHat"
+
+  - name: Iniciar MariaDB en Debian
+    service:
+      name: mariadb
+      enabled: true
+      state: started
+    when: ansible_os_family == "Debian"
+
+  - name: RedHat - Permitir conexiones a mysql - SELinux
+    seboolean: name=mysql_connect_any state=true persistent=yes
+    when: ansible_facts['os_family'] == "RedHat"
+
+# Se inicializan y habilitan servicios MySQL
+#### RedHat ####
+  - name: RedHat - Iniciar y habilitar MySQL
+    service: name=mysqld state=started enabled=yes
+    when: ansible_facts['os_family'] == "RedHat"
+
+  #### Debian ####
+  - name: Debian - Iniciar y habilitar MySQL
+    service: name=mysql state=started enabled=yes
+    when: ansible_facts['os_family'] == "Debian"
+
+# Creacion de reglas de firewall para funcionamiento de MariaDB
+  #### RedHat ####
+  - name: RedHat - Creacion regla de firewalld MariaDB
+    firewalld: port={{ port_mysql }}/tcp permanent=true state=enabled immediate=yes
+    when: ansible_facts['os_family'] == "RedHat"
+
+#### Debian ####
+  - name: Debian - Creacion regla de firewall MySQL
+    ufw:
+      rule: allow
+      port: "{{ port_mysql }}"
+      proto: tcp
+    when: ansible_facts['os_family'] == "Debian"
+
+# Creacion de usuario de base de datos
+#### RedHat ####
+  - name: RedHat - Crear usuario en DB
+    mysql_user:
+      name: "{{ dbuser }}"
+      password: "{{ userpasswd }}"
+      priv: '{{ dbname }}.*:ALL,GRANT'
+      state: present
+    when: ansible_facts['os_family'] == "RedHat"
+
+#### Debian ####
+  - name: Debian - Crear usuario en DB
+    mysql_user:
+      name: "{{ dbuser }}"
+      password: "{{ userpasswd }}"
+      priv: '{{ dbname }}.*:ALL,GRANT'
+      state: present
+    when: ansible_facts['os_family'] == "Debian"
+
+# Creacion y configuracion de base de datos
+
+#### RedHat ####
+  - name: RedHat - Crear DB de aplicacion
+    mysql_db:      
+      name: "{{ dbname }}"
+      password: "{{ dbpassword }}"
+      state: present
+    when: ansible_facts['os_family'] == "RedHat"
+
+#### Debian ####
+  - name: Debian - Crear DB de aplicacion
+    mysql_db:
+      name: "{{ dbname }}"
+      state: present
+      password: "{{ dbpassword }}"
+    when: ansible_facts['os_family'] == "Debian"
+
+# Creación de tablas de la base de datos de la aplicación
+
+#### RedHat ####
+  - name: RedHat - Crear tabla DB de aplicacion
+    mysql_db: name=todo state=import target=/root/.ssh/GitTaller/todo.sql
+    when: ansible_facts['os_family'] == "RedHat"
+
+#### Debian ####
+  - name: Debian - Crear tabla DB de aplicacion
+    mysql_db: name=todo state=import target=/root/.ssh/GitTaller/todo.sql
+    when: ansible_facts['os_family'] == "Debian"
+
+
+    # Eliminacion de usuario anonimo 
+#### Debian ####
+  - name: Debian - Eliminar usuario anonimo
+    no_log: true
+    mysql_user:  
+      name: ''
+      host: localhost
+      state: absent
+    when: ansible_facts['os_family'] == "Debian"  
+
+  #### RedHat ####
+  - name: RedHat - Eliminar usuario anonimo
+    no_log: true
+    mysql_user:      
+      name: ''
+      host_all: True
+      state: absent
+    when: ansible_facts['os_family'] == "RedHat"

@@ -19,3 +19,16 @@
     loop: "{{ port_ubuntu }}"
     when: ansible_os_family == "Debian"
 
+# Configuracion de SELinux para conexiones entre apache y mysql - RedHat
+  - name: RedHat - Permitir a httpd conectar con mysql
+    seboolean:
+      name: httpd_can_network_connect_db
+      persistent: yes
+      state: yes
+    when: ansible_facts['os_family'] == "RedHat"
+
+  - name: Configuración Proxy Reverso
+    template:
+    src: default-site.conf
+      dest: /etc/httpd/conf.d/default-site.conf
+    notify: Reiniciar servicio

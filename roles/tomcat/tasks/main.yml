@@ -31,3 +31,10 @@
       name: tomcat
       comment: usuario tomcat
       group: tomcat
+
+  - name: Desplegar aplicacion web
+    unarchive:
+      src: todo.war
+      dest: /opt/tomcat/webapps/todo.war
+      remote_src: yes
+

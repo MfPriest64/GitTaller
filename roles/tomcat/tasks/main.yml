@@ -1,0 +1,33 @@
+---
+# tasks file for tomcat
+
+
+# Incluir variables del archivo de variables
+  - name: Incluir variables
+    include_vars: /root/.ssh/GitTaller/roles/tomcat/vars/main.yml
+
+# Se descarga e instala tomcat 
+
+  - name: Descargar e instalar tomcat
+    unarchive:
+      src: "{{ tomcat_url }}"
+      dest: /opt
+      remote_src: yes
+
+  - name: Instalar servicio Tomcat
+    template:
+      src: tomcat.service.j2
+      dest: /etc/systemd/system/tomcat.service
+    notify: Reiniciar Tomcat
+
+  - name: Tomcat está habilitado e iniciado
+    systemd:
+      name: tomcat
+      state: started
+      enabled: yes
+
+  - name: Agregar usuario 'tomcat' con el grupo 'tomcat'
+    user:
+      name: tomcat
+      comment: usuario tomcat
+      group: tomcat

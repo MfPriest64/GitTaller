@@ -1,0 +1,42 @@
+# Este playbook manejará el despliegue de diferentes roles para las distribuciones RedHat y Debian.
+#
+# Primer rol. Contiene paquetes esenciales para el correcto funcionamiento
+# de los servidores a configurar.
+- name: Update de servidores
+  hosts: all
+  remote_user: Ansible
+  become: yes
+
+  roles:
+    - update
+
+
+# Segundo rol. Instala y configura Apache con Proxy Reverso
+- name: Desplegar Servidores Web
+  hosts: all
+  remote_user: Ansible
+  become: yes
+
+  roles:
+    - webserver
+
+
+# Tercer rol. Despliegue de servidor MySQL
+- name: Desplegar servidor de bases de datos
+  hosts: all
+  remote_user: Ansible
+  become: yes
+
+  roles:
+    - dbserver
+
+
+# Cuarto rol. Despliegue de servidor Tomcat
+- name: Desplegar servidor Tomcat
+  hosts: all
+  remote_user: Ansible
+  become: yes
+
+  roles:
+    - tomcat
+

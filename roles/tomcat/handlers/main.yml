@@ -1,0 +1,10 @@
+---
+# handlers file for tomcat
+#
+- name: Reinicar Tomcat
+    systemd:
+      daemon_reload: yes
+      name: tomcat
+      state: restarted
+      enabled: yes
+

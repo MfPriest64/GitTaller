@@ -1,0 +1,6 @@
+---
+# handlers file for update
+#
+  - name: Reiniciar servidor
+    reboot:
+

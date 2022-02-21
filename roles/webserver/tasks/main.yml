@@ -29,6 +29,6 @@
 
   - name: Configuración Proxy Reverso
     template:
-    src: default-site.conf
+      src: default-site.conf
       dest: /etc/httpd/conf.d/default-site.conf
     notify: Reiniciar servicio

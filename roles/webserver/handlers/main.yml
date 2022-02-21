@@ -1,2 +1,11 @@
 ---
 # handlers file for webserver
+#
+#handlers: 
+
+  - name: Reiniciar servicio
+    systemd:
+      daemon_reload: yes
+      name: httpd
+      state: restarted
+      enabled: yes

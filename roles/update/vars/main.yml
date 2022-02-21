@@ -8,12 +8,18 @@ paquetes_rh:
 - mariadb-server
 - mariadb
 - tar
+- python3-libselinux
+- python3-libsemanage
+- policycoreutils-python-utils
 
 paquetes_deb:
 - apache2
 - openjdk-17-jdk
 - mariadb-server
 - mariadb-client
+- python3-libselinux
+- python3-libsemanage
+- policycoreutils-python-utils
 
 port_ubuntu:
 - 22

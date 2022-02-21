@@ -4,10 +4,11 @@
   - name: Incluir variables
     include_vars: /root/.ssh/GitTaller/roles/dbserver/vars/main.yml
 
+    #Tareas comunes:
 
-  - name: Iniciar MariaDB en RedHat
+  - name: Iniciar MySql en RedHat
     service:
-      name: mariadb
+      name: mysqld
       enabled: true
       state: started
     when: ansible_os_family in ['RedHat', 'Rocky']
@@ -37,14 +38,14 @@
 # Creacion de reglas de firewall para funcionamiento de MariaDB
   #### RedHat ####
   - name: RedHat - Creacion regla de firewalld MariaDB
-    firewalld: port={{ port_mysql }}/tcp permanent=true state=enabled immediate=yes
+    firewalld: port={{ mysql_port }}/tcp permanent=true state=enabled immediate=yes
     when: ansible_os_family in ['RedHat', 'Rocky']
 
 #### Debian ####
   - name: Debian - Creacion regla de firewall MySQL
     ufw:
       rule: allow
-      port: "{{ port_mysql }}"
+      port: "{{ mysql_port }}"
       proto: tcp
     when: ansible_facts['os_family'] == "Debian"
 
@@ -73,7 +74,6 @@
   - name: RedHat - Crear DB de aplicacion
     mysql_db:      
       name: "{{ dbname }}"
-      login_password: "{{ dbpassword }}"
       state: present
     when: ansible_os_family in ['RedHat', 'Rocky']
 
@@ -82,19 +82,33 @@
     mysql_db:
       name: "{{ dbname }}"
       state: present
-      login_password: "{{ dbpassword }}"
+      # login_password: "{{ dbpassword }}"
     when: ansible_facts['os_family'] == "Debian"
+
+
 
 # Creación de tablas de la base de datos de la aplicación
 
 #### RedHat ####
+  - name: Mover archivo creacion de tablas todo.sql
+    template:
+      src: todo.sql
+      dest: /tmp/todo.sql
+    when: ansible_os_family in ['RedHat', 'Rocky']
+
   - name: RedHat - Crear tabla DB de aplicacion
-    mysql_db: name=todo state=import target=/root/.ssh/GitTaller/todo.sql
+    mysql_db: name=todo state=import target=/tmp/todo.sql
     when: ansible_os_family in ['RedHat', 'Rocky']
 
 #### Debian ####
+  - name: Mover archivo creacion de tablas todo.sql
+    template:
+      src: todo.sql
+      dest: /tmp/todo.sql
+    when: ansible_facts['os_family'] == "Debian"
+
   - name: Debian - Crear tabla DB de aplicacion
-    mysql_db: name=todo state=import target=/root/.ssh/GitTaller/todo.sql
+    mysql_db: name=todo state=import target=/tmp/todo.sql
     when: ansible_facts['os_family'] == "Debian"
 
 

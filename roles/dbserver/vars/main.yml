@@ -1,8 +1,8 @@
 ---
 # vars file for dbserver
 #
-mysqlservice: mariadb
-port_mysql: '3306'
+#mysqlservice: mariadb
+mysql_port: '3306'
 dbuser: todo
 dbname: todo
 userpasswd: prueba2022

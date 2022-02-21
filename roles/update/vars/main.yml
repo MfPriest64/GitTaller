@@ -5,12 +5,9 @@
 paquetes_rh:
 - httpd
 - java-17-openjdk
-- mariadb-server
-- mariadb
+- mysql
+- mysql-server
 - tar
-- python3-libselinux
-- python3-libsemanage
-- policycoreutils-python-utils
 - python3-PyMySQL
 
 paquetes_deb:

@@ -3,7 +3,7 @@
 #
 # handlers:
 
-  - name: Reinicar servicio
+  - name: Reiniciar servicio
     systemd:
       daemon_reload: yes
       name: tomcat

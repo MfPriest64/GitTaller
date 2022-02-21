@@ -10,7 +10,7 @@
       name: mariadb
       enabled: true
       state: started
-    when: ansible_os_family == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
   - name: Iniciar MariaDB en Debian
     service:
@@ -21,13 +21,13 @@
 
   - name: RedHat - Permitir conexiones a mysql - SELinux
     seboolean: name=mysql_connect_any state=true persistent=yes
-    when: ansible_facts['os_family'] == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
 # Se inicializan y habilitan servicios MySQL
 #### RedHat ####
   - name: RedHat - Iniciar y habilitar MySQL
     service: name=mysqld state=started enabled=yes
-    when: ansible_facts['os_family'] == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
   #### Debian ####
   - name: Debian - Iniciar y habilitar MySQL
@@ -38,7 +38,7 @@
   #### RedHat ####
   - name: RedHat - Creacion regla de firewalld MariaDB
     firewalld: port={{ port_mysql }}/tcp permanent=true state=enabled immediate=yes
-    when: ansible_facts['os_family'] == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
 #### Debian ####
   - name: Debian - Creacion regla de firewall MySQL
@@ -56,7 +56,7 @@
       password: "{{ userpasswd }}"
       priv: '{{ dbname }}.*:ALL,GRANT'
       state: present
-    when: ansible_facts['os_family'] == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
 #### Debian ####
   - name: Debian - Crear usuario en DB
@@ -75,7 +75,7 @@
       name: "{{ dbname }}"
       password: "{{ dbpassword }}"
       state: present
-    when: ansible_facts['os_family'] == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
 #### Debian ####
   - name: Debian - Crear DB de aplicacion
@@ -90,7 +90,7 @@
 #### RedHat ####
   - name: RedHat - Crear tabla DB de aplicacion
     mysql_db: name=todo state=import target=/root/.ssh/GitTaller/todo.sql
-    when: ansible_facts['os_family'] == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
 #### Debian ####
   - name: Debian - Crear tabla DB de aplicacion
@@ -115,4 +115,4 @@
       name: ''
       host_all: True
       state: absent
-    when: ansible_facts['os_family'] == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']

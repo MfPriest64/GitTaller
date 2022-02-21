@@ -4,9 +4,16 @@
 #
 #
 # Incluir variables del archivo de variables
+## Instalar Epel para que cargue la variable de "RedHat"
   - name: Incluir variables
     include_vars: /root/.ssh/GitTaller/roles/update/vars/main.yml
   
+  - name: Instalar Epel en Rocky
+    dnf:
+      name: epel-release
+      state: latest
+    when: ansible_os_family in ['RedHat', 'Rocky']
+
 
   - name: Instalar paquetes en RedHat
     dnf:
@@ -14,7 +21,7 @@
       state: latest
       update_cache: yes
     loop: "{{ paquetes_rh }}"
-    when: ansible_os_family in "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
   - name: Instalar paquetes en Debian
     apt:
@@ -29,7 +36,7 @@
       name: "*"
       state: latest
       update_only: yes
-    when: ansible_os_family == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
     notify: Reiniciar servidor
 
   - name: Actualizar paquetes en Debian
@@ -46,7 +53,7 @@
       state: enabled
       port: "{{ item }}"
     loop: "{{ port_redhat }}" 
-    when: ansible_os_family == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
   - name: Firewall activado con ssh habilitado en Debian
     ufw:

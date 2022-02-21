@@ -8,14 +8,16 @@
     firewalld:
       permanent: yes
       port: "{{ item }}"
+      state: enabled
     loop: "{{ port_redhat }}"
-    when: ansible_os_family == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
   - name: Firewall activar puerto 80
     ufw:
       rule: allow
       port: "{{ item }}"
       proto: tcp
+      state: enabled
     loop: "{{ port_ubuntu }}"
     when: ansible_os_family == "Debian"
 
@@ -25,7 +27,7 @@
       name: httpd_can_network_connect_db
       persistent: yes
       state: yes
-    when: ansible_facts['os_family'] == "RedHat"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
   - name: Configuración Proxy Reverso
     template:

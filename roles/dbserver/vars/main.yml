@@ -6,3 +6,4 @@ port_mysql: '3306'
 dbuser: todo
 dbname: todo
 userpasswd: prueba2022
+dbpassword: prueba2022

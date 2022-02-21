@@ -3,9 +3,17 @@
 #
 #handlers: 
 
-  - name: Reiniciar servicio
+  - name: Reiniciar servicio httpd
     systemd:
       daemon_reload: yes
       name: httpd
       state: restarted
       enabled: yes
+
+  - name: Reiniciar servicio apache
+    systemd:
+      daemon_reload: yes
+      name: apache2
+      state: restarted
+      enabled: yes
+      

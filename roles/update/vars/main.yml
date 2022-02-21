@@ -11,18 +11,19 @@ paquetes_rh:
 - python3-libselinux
 - python3-libsemanage
 - policycoreutils-python-utils
+- python3-PyMySQL
 
 paquetes_deb:
 - apache2
 - openjdk-17-jdk
 - mariadb-server
 - mariadb-client
-- python3-libselinux
-- python3-libsemanage
 - policycoreutils-python-utils
+- python3-pip
+- python3-mysqldb
 
-port_ubuntu:
-- 22
+port_debian:
+- '22'
 
 port_redhat:
 - 22/tcp

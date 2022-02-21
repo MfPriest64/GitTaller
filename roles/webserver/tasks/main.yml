@@ -29,8 +29,19 @@
       state: yes
     when: ansible_os_family in ['RedHat', 'Rocky']
 
-  - name: Configuración Proxy Reverso
+  - name: Configuración Proxy Reverso RedHat
     template:
       src: default-site.conf
       dest: /etc/httpd/conf.d/default-site.conf
-    notify: Reiniciar servicio
+    when: ansible_os_family in ['RedHat', 'Rocky']  
+    notify: Reiniciar servicio httpd
+
+    
+  - name: Configuración Proxy Reverso Debian
+    template:
+      src: default-site.conf
+      dest: /etc/apache2/sites-available/Apache2Proxy.conf
+    when: ansible_os_family in ['Debian']  
+    notify: Reiniciar servicio apache
+
+ 

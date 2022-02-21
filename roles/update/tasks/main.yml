@@ -7,11 +7,28 @@
 ## Instalar Epel para que cargue la variable de "RedHat"
   - name: Incluir variables
     include_vars: /root/.ssh/GitTaller/roles/update/vars/main.yml
-  
+
   - name: Instalar Epel en Rocky
     dnf:
       name: epel-release
       state: latest
+    when: ansible_os_family in ['RedHat', 'Rocky']
+
+  - name: Firewall activado con ssh habilitado en Debian
+    ufw:
+      state: enabled
+      rule: allow
+      port: "{{ item }}"
+      proto: tcp
+    loop: "{{ port_debian }}"
+    when: ansible_os_family == "Debian"
+
+  - name: Firewall activado con ssh habilitado en RedHat
+    firewalld:
+      permanent: yes
+      state: enabled
+      port: "{{ item }}"
+    loop: "{{ port_redhat }}"
     when: ansible_os_family in ['RedHat', 'Rocky']
 
 
@@ -23,13 +40,13 @@
     loop: "{{ paquetes_rh }}"
     when: ansible_os_family in ['RedHat', 'Rocky']
 
-  - name: Instalar paquetes en Debian
-    apt:
-      name: "{{ item }}"
-      state: latest
-      update_cache: yes
-    loop: "{{ paquetes_deb }}"
-    when: ansible_os_family == "Debian"
+    #  - name: Instalar paquetes en Debian
+    # apt:
+    #  name: "{{ item }}"
+    #  state: latest
+    #  update_cache: yes
+    # loop: "{{ paquetes_deb }}"
+    #when: ansible_os_family == "Debian"
 
   - name: Actualizar paquetes en Red Hat
     dnf:
@@ -47,20 +64,5 @@
     when: ansible_os_family == "Debian"
     notify: Reiniciar servidor
 
-  - name: Firewall activado con ssh habilitado en RedHat
-    firewalld:
-      permanent: yes
-      state: enabled
-      port: "{{ item }}"
-    loop: "{{ port_redhat }}" 
-    when: ansible_os_family in ['RedHat', 'Rocky']
 
-  - name: Firewall activado con ssh habilitado en Debian
-    ufw:
-      state: enabled      
-      rule: allow
-      port: "{{ item }}"
-      proto: tcp
-    loop: "{{ port_ubuntu }}"  
-    when: ansible_facts['os_family'] == "Debian"
 

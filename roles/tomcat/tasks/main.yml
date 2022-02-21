@@ -7,13 +7,37 @@
     include_vars: /root/.ssh/GitTaller/roles/tomcat/vars/main.yml
 
 # Se descarga e instala tomcat 
+  - name: Agregar directorio tomcat
+    file: 
+      path: /opt/tomcat
+      state: directory
+
+  - name: Agregar grupo tomcat
+    group:
+      name: tomcat
+      state: present
+    
+
+  - name: Agregar usuario 'tomcat'
+    user:
+      name: tomcat
+      comment: usuario tomcat
+      group: tomcat
+    
 
   - name: Descargar e instalar tomcat
     unarchive:
       src: "{{ tomcat_url }}"
-      dest: /opt
+      dest: /opt/tomcat
       remote_src: yes
-
+ 
+  - name: Cambiar owner de directorio opt/tomcat usuario tomcat    
+    file:
+      path: /opt/tomcat
+      owner: tomcat
+      group: tomcat
+      recurse: yes
+            
   - name: Instalar servicio Tomcat
     template:
       src: tomcat_service
@@ -25,16 +49,14 @@
       name: tomcat
       state: started
       enabled: yes
+      daemon_reload: yes
 
-  - name: Agregar usuario 'tomcat' con el grupo 'tomcat'
-    user:
-      name: tomcat
-      comment: usuario tomcat
-      group: tomcat
+  - name: Copiar archivo todo.war a servidores
+    copy: src=todo.war  dest=/opt/tomcat/apache-tomcat-9.0.54/webapps/todo.war
 
-  - name: Desplegar aplicacion web
-    unarchive:
-      src: todo.war
-      dest: /opt/tomcat/webapps/todo.war
-      remote_src: yes
+    #  - name: Mover aplicacion todo.war 
+    # unarchive:
+    #  src: todo.war
+    #  dest: /opt/tomcat/apache-tomcat-9.0.54/webapps
+    
 

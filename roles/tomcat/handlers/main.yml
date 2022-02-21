@@ -6,7 +6,7 @@
   - name: Reiniciar servicio
     systemd:
       daemon_reload: yes
-      name: tomcat
+      name: tomcat.service
       state: restarted
       enabled: yes
 

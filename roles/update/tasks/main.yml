@@ -8,6 +8,23 @@
   - name: Incluir variables
     include_vars: /root/.ssh/GitTaller/roles/update/vars/main.yml
 
+  - name: Actualizar paquetes en Red Hat
+    dnf:
+      name: "*"
+      state: latest
+      update_only: yes
+    when: ansible_os_family in ['RedHat', 'Rocky']
+    notify: Reiniciar servidor
+
+  - name: Actualizar paquetes en Debian
+    apt:
+      name: "*"
+      state: latest
+      update_cache: yes
+    when: ansible_os_family == "Debian"
+    notify: Reiniciar servidor
+
+
   - name: Instalar Epel en Rocky
     dnf:
       name: epel-release
@@ -40,29 +57,14 @@
     loop: "{{ paquetes_rh }}"
     when: ansible_os_family in ['RedHat', 'Rocky']
 
-    #  - name: Instalar paquetes en Debian
-    # apt:
-    #  name: "{{ item }}"
-    #  state: latest
-    #  update_cache: yes
-    # loop: "{{ paquetes_deb }}"
-    #when: ansible_os_family == "Debian"
-
-  - name: Actualizar paquetes en Red Hat
-    dnf:
-      name: "*"
-      state: latest
-      update_only: yes
-    when: ansible_os_family in ['RedHat', 'Rocky']
-    notify: Reiniciar servidor
-
-  - name: Actualizar paquetes en Debian
+  - name: Instalar paquetes en Debian
     apt:
-      name: "*"
+      name: "{{ item }}"
       state: latest
       update_cache: yes
+    loop: "{{ paquetes_deb }}"
     when: ansible_os_family == "Debian"
-    notify: Reiniciar servidor
+
 
 
 

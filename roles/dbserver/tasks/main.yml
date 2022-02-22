@@ -96,9 +96,9 @@
       dest: /tmp/todo.sql
     when: ansible_os_family in ['RedHat', 'Rocky']
 
-    #  - name: RedHat - Crear tabla DB de aplicacion
-    #    mysql_db: name=todo state=import target=/tmp/todo.sql
-    #    when: ansible_os_family in ['RedHat', 'Rocky']
+  - name: RedHat - Crear tabla DB de aplicacion
+    mysql_db: name=todo state=import target=/tmp/todo.sql
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
 #### Debian ####
   - name: Mover archivo creacion de tablas todo.sql
@@ -107,9 +107,9 @@
       dest: /tmp/todo.sql
     when: ansible_facts['os_family'] == "Debian"
 
-    #  - name: Debian - Crear tabla DB de aplicacion
-    #    mysql_db: name=todo state=import target=/tmp/todo.sql
-    #    when: ansible_facts['os_family'] == "Debian"
+  - name: Debian - Crear tabla DB de aplicacion
+    mysql_db: name=todo state=import target=/tmp/todo.sql
+    when: ansible_facts['os_family'] == "Debian"
 
 
     # Eliminacion de usuario anonimo 

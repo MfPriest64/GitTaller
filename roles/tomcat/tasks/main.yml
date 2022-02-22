@@ -38,11 +38,19 @@
       group: tomcat
       recurse: yes
             
-  - name: Instalar servicio Tomcat
+  - name: Instalar servicio Tomcat para redhat
     template:
-      src: tomcat_service
+      src: tomcat_service_redhat
       dest: /etc/systemd/system/tomcat.service
     notify: Reiniciar servicio
+    when: ansible_facts['os_family'] == "RedHat, Rocky"
+
+  - name: Instalar servicio Tomcat para ubuntu
+    template:
+      src: tomcat_service_ubuntu
+      dest: /etc/systemd/system/tomcat.service
+    notify: Reiniciar servicio
+    when: ansible_facts['os_family'] == "Debian"
 
   - name: Tomcat está habilitado e iniciado
     systemd:
@@ -53,6 +61,14 @@
 
   - name: Copiar archivo todo.war a servidores
     copy: src=todo.war  dest=/opt/tomcat/apache-tomcat-9.0.54/webapps/todo.war
+
+  - name: Agregar directorio config
+    file:
+      path: /opt/config
+      state: directory      
+
+  - name: Copiar archivo app.properties a opt/config
+    copy: src=app.properties  dest=/opt/config/app.properties      
 
     #  - name: Mover aplicacion todo.war 
     # unarchive:

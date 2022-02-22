@@ -18,6 +18,7 @@ paquetes_deb:
 - policycoreutils-python-utils
 - python3-pip
 - python3-mysqldb
+- default-jdk  
 
 port_debian:
 - '22'

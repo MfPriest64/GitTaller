@@ -1,10 +1,10 @@
 [webserver]
 rocky01		ansible_host=192.168.9.7
-ubuntu01	ansible_host=192.168.9.8
+ubuntu01	ansible_host=192.168.9.10
 
 [dbserver]
 rocky01         ansible_host=192.168.9.7
-ubuntu01        ansible_host=192.168.9.8
+ubuntu01        ansible_host=192.168.9.10
 
 [linux:children]
 webserver

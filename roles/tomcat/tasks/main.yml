@@ -77,7 +77,7 @@
       state: enabled
     loop: "{{ port_redhat }}"
     when: ansible_os_family in ['RedHat', 'Rocky']
-    notify: reiniciar firewald
+    notify: Reiniciar firewalld
 
   - name: Firewall activar puerto tomcat Debian
     ufw:

@@ -10,7 +10,7 @@
       state: restarted
       enabled: yes
 
-  - name: reiniciar firewalld
+  - name: Reiniciar firewalld
     systemd:
       name: firewalld
       state: restarted

@@ -1,0 +1,19 @@
+Explicacion breve de los playbook para el taller 2022 linux
+
+ 
+
+update: Este rol consiste en la instalación de los paquetes básicos necesarios para correr la aplicación web solicitada como requerimiento, así como también la habilitación del firewall con SSH habilitado. 
+
+ 
+
+dbserver: Este rol se encarga de la implementación de todo lo relacionado a la base de datos del sistema, desde iniciar el servicio MariaDB o MySQL, hasta la creación del usuario que utilizará la base de datos, incluyendo también la creación de la misma con las tablas correspondientes. 
+
+ 
+
+webserver: Este rol especifica todas las tareas necesarias para implementar el apache como reverse proxy, incluyendo también todas las configuraciones pertinentes. 
+
+ 
+
+tomcat: Este último rol implica todas las tareas relacionadas al correcto funcionamiento del servidor tomcat, incluyendo el despliegue de la aplicación web solicitada como requerimiento. 
+
+Por mas informacion ver el pdf Obligatorio Taller Linux

@@ -43,7 +43,7 @@
       src: tomcat_service_redhat
       dest: /etc/systemd/system/tomcat.service
     notify: Reiniciar servicio
-    when: ansible_facts['os_family'] == "RedHat, Rocky"
+    when: ansible_os_family in ['RedHat', 'Rocky']
 
   - name: Instalar servicio Tomcat para ubuntu
     template:

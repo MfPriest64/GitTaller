@@ -34,7 +34,7 @@
 # Cuarto rol. Despliegue de servidor Tomcat
 - name: Desplegar servidor Tomcat
   hosts: all
-  remote_user: sysadmin
+  remote_user: Ansible
   become: yes
 
   roles:

@@ -1,7 +1,7 @@
 ---
 # vars file for webserver
 #
-port_ubuntu:
+port_debian:
 - '80'
 
 port_redhat:

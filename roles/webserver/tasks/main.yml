@@ -18,7 +18,7 @@
       port: "{{ item }}"
       proto: tcp
       state: enabled
-    loop: "{{ port_ubuntu }}"
+    loop: "{{ port_debian }}"
     when: ansible_os_family == "Debian"
 
 # Configuracion de SELinux para conexiones entre apache y mysql - RedHat

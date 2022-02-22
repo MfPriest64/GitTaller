@@ -70,6 +70,24 @@
   - name: Copiar archivo app.properties a opt/config
     copy: src=app.properties  dest=/opt/config/app.properties      
 
+  - name: Firewall activar puerto tomcat RedHat
+    firewalld:
+      permanent: yes
+      port: "{{ item }}"
+      state: enabled
+    loop: "{{ port_redhat }}"
+    when: ansible_os_family in ['RedHat', 'Rocky']
+
+  - name: Firewall activar puerto tomcat Debian
+    ufw:
+      rule: allow
+      port: "{{ item }}"
+      proto: tcp
+      state: enabled
+    loop: "{{ port_debian }}"
+    when: ansible_os_family == "Debian"
+
+
     #  - name: Mover aplicacion todo.war 
     # unarchive:
     #  src: todo.war

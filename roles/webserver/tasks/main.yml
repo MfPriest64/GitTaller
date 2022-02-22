@@ -4,7 +4,7 @@
   - name: Incluir variables
     include_vars: /home/sysadmin/GitTaller/roles/webserver/vars/main.yml
 
-  - name: Firewall activar puerto 80
+  - name: Firewall activar puerto 80 Red Hat
     firewalld:
       permanent: yes
       port: "{{ item }}"
@@ -12,7 +12,7 @@
     loop: "{{ port_redhat }}"
     when: ansible_os_family in ['RedHat', 'Rocky']
 
-  - name: Firewall activar puerto 80
+  - name: Firewall activar puerto 80 Debian
     ufw:
       rule: allow
       port: "{{ item }}"

@@ -4,7 +4,7 @@
 
 # Incluir variables del archivo de variables
   - name: Incluir variables
-    include_vars: /root/.ssh/GitTaller/roles/tomcat/vars/main.yml
+    include_vars: /home/sysadmin/GitTaller/roles/tomcat/vars/main.yml
 
 # Se descarga e instala tomcat 
   - name: Agregar directorio tomcat
@@ -75,4 +75,4 @@
     #  src: todo.war
     #  dest: /opt/tomcat/apache-tomcat-9.0.54/webapps
     
-
+    

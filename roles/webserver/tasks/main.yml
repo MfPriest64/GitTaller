@@ -2,7 +2,7 @@
 # tasks file for webserver
 #
   - name: Incluir variables
-    include_vars: /root/.ssh/GitTaller/roles/webserver/vars/main.yml
+    include_vars: /home/sysadmin/GitTaller/roles/webserver/vars/main.yml
 
   - name: Firewall activar puerto 80
     firewalld:

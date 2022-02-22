@@ -6,7 +6,7 @@
 # Incluir variables del archivo de variables
 ## Instalar Epel para que cargue la variable de "RedHat"
   - name: Incluir variables
-    include_vars: /root/.ssh/GitTaller/roles/update/vars/main.yml
+    include_vars: /home/sysadmin/GitTaller/roles/update/vars/main.yml
 
   - name: Actualizar paquetes en Red Hat
     dnf:

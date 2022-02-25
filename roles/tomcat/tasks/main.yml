@@ -6,6 +6,15 @@
   - name: Incluir variables
     include_vars: /home/sysadmin/GitTaller/roles/tomcat/vars/main.yml
 
+
+# Habilitar modulos proxy
+  - name: Habilitar modulo proxt
+    apache2_module:
+     state: present
+     name:  "{{ item }}"
+    loop: "{{ proxyvar }}"
+    when: ansible_os_family in ['Debian']
+
 # Se descarga e instala tomcat 
   - name: Agregar directorio tomcat
     file: 
@@ -70,23 +79,7 @@
   - name: Copiar archivo app.properties a opt/config
     copy: src=app.properties  dest=/opt/config/app.properties      
 
-  - name: Firewall activar puerto tomcat RedHat
-    firewalld:
-      permanent: yes
-      port: "{{ item }}"
-      state: enabled
-    loop: "{{ port_redhat }}"
-    when: ansible_os_family in ['RedHat', 'Rocky']
-    notify: Reiniciar firewalld
 
-  - name: Firewall activar puerto tomcat Debian
-    ufw:
-      rule: allow
-      port: "{{ item }}"
-      proto: tcp
-      state: enabled
-    loop: "{{ port_debian }}"
-    when: ansible_os_family == "Debian"
 
 
     #  - name: Mover aplicacion todo.war 

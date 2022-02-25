@@ -40,7 +40,7 @@
   - name: Configuración Proxy Reverso Debian
     template:
       src: default-site.conf
-      dest: /etc/apache2/sites-available/Apache2Proxy.conf
+      dest: /etc/apache2/sites-enabled/Apache2Proxy.conf
     when: ansible_os_family in ['Debian']  
     notify: Reiniciar servicio apache
 
